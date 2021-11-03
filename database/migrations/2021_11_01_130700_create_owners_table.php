@@ -15,14 +15,14 @@ class CreateOwnersTable extends Migration
     {
         Schema::create('owners', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('users_id')->constrained('users', 'id')->cascadeOnDelete();
-            $table->foreignId('community_id')->constrained('community', 'id')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('community_id')->constrained('communities')->cascadeOnDelete();
             $table->string('passport_copy')->nullable();
-            $table->string('title_dead_copy');
+            $table->string('title_dead_copy')->nullable();
             $table->string('emirate_id')->nullable();
             $table->unsignedInteger('unit_number')->nullable();
-            $table->unsignedInteger('renting_price');
-            $table->boolean('direct');
+            $table->unsignedInteger('renting_price')->nullable();
+            $table->boolean('direct')->nullable();
             $table->timestamps();
         });
     }
