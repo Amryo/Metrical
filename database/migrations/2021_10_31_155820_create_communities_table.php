@@ -21,8 +21,10 @@ class CreateCommunitiesTable extends Migration
             $table->unsignedFloat('area')->default(0);
             $table->unsignedFloat('location_longitude');
             $table->unsignedFloat('location_latitude');
+            $table->string('address')->nullable();
             $table->string('image')->nullable();
-            $table->enum('status', ['under_constraction', 'ready']);
+            // 0 is Under Construction , 1 is Ready ;
+            $table->enum('status', [0, 1]);
 
             $table->timestamps();
         });

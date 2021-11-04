@@ -16,7 +16,7 @@ class CreateTenantsTable extends Migration
         Schema::create('tenants', function (Blueprint $table) {
             $table->id();
             $table->foreignId('users_id')->constrained('users', 'id')->cascadeOnDelete();
-            $table->foreignId('community_id')->constrained('community', 'id')->cascadeOnDelete();
+            $table->foreignId('community_id')->constrained('communities', 'id')->cascadeOnDelete();
             $table->string('passport_copy')->nullable();
             $table->string('visa_copy')->nullable();
             $table->unsignedInteger('unit_number')->nullable();

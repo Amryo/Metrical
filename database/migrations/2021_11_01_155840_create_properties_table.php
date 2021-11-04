@@ -36,9 +36,10 @@ class CreatePropertiesTable extends Migration
             $table->string('location_longitude');
             $table->string('image')->nullable();
             $table->enum('status', ['under_constraction', 'ready']);
+            $table->integer('gate');
             //forignK
             $table->foreignId('community_id')->constrained('communities')->cascadeOnDelete();
-            $table->foreignId('owner_id')->constrained('owners')->nullable()->cascadeOnDelete();
+            $table->foreignId('owner_id')->nullable()->constrained('owners')->cascadeOnDelete();
             $table->timestamps();
         });
     }

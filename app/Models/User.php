@@ -41,4 +41,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function owner()
+    {
+        return $this->hasOne(Owner::class, 'users_id', 'id');
+    }
+    public function tenant()
+    {
+        return $this->hasOne(Tenant::class, 'users_id', 'id');
+    }
 }

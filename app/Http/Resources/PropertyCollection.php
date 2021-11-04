@@ -1,32 +1,22 @@
 <?php
 
-namespace App\Models;
+namespace App\Http\Resources;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class Property extends Model
+class PropertyCollection extends ResourceCollection
 {
-    use HasFactory;
-
-    public function community()
+    /**
+     * Transform the resource collection into an array.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     */
+    public function toArray($request)
     {
-        return $this->belongsTo(Community::class, 'community_id', 'id');
-    }
-    public function rent()
-    {
-        return $this->hasMany(Rent::class, 'property_id', 'id');
-    }
-
-    public function toArray()
-    {
-        $name = 'name_' . strval($this->name . app()->getLocale());
-        $description = 'description_' . strval($this->name . app()->getLocale());
         return [
             'id' => $this->id,
-            'name' => $this->$name,
-            'description' => $this->$description,
+            'name' => $this->name_ar,
             'area' => $this->area,
             'reference' => $this->reference,
             'feminizations' => $this->feminizations,
