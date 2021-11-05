@@ -24,6 +24,15 @@ class Community extends Model
         return $this->hasMany(Tenant::class, 'community_id', 'id');
     }
 
+    public function news()
+    {
+        return $this->hasMany(News::class, 'community_id', 'id');
+    }
+
+    public function event()
+    {
+        return $this->hasMany(Event::class, 'community_id', 'id');
+    }
     /* public function scopeData($query)
     {
         $query->select(['name_' . app()->getLocale() . ' as name', 'area', 'location_longitude', 'location_latitude', 'address', 'image', 'status']);

@@ -18,11 +18,18 @@ class Property extends Model
     {
         return $this->hasMany(Rent::class, 'property_id', 'id');
     }
+    public function amenity()
+    {
+        return $this->hasMany(Amenity::class, 'property_id', 'id');
+    }
+
 
     public function toArray()
     {
         $name = 'name_' . strval($this->name . app()->getLocale());
         $description = 'description_' . strval($this->name . app()->getLocale());
+
+        $rentNow = Rent::where('id', $this->id)->exists();
         return [
             'id' => $this->id,
             'name' => $this->$name,
@@ -32,6 +39,7 @@ class Property extends Model
             'feminizations' => $this->feminizations,
             'type' => $this->type,
             'offer_type' => $this->offer_type,
+            'is_shortterm' => $this->is_shortterm,
             'bedroom' => $this->bedroom,
             'bathroom' => $this->bathroom,
             'date_added' => $this->date_added,
@@ -42,6 +50,8 @@ class Property extends Model
             'community_id' => $this->community_id,
             'owner_id' => $this->owner_id,
             'city' => $this->city,
+            'rent_now' => $rentNow,
+            'current_rent' => $rentNow ? Rent::where('id', $this->id)->get() : false,
         ];
     }
 }

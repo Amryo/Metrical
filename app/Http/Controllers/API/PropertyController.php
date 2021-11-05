@@ -8,11 +8,7 @@ use Illuminate\Http\Request;
 
 class PropertyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
 
@@ -26,55 +22,26 @@ class PropertyController extends Controller
         ];
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        $community = Property::with('community')->where('id', $id)->get();
+        $properties = Property::with('community')->where('id', $id)->get();
 
 
         return [
             'status' => 200,
             'message' => 'property recived Successfully',
-            'data' => $community,
+            'data' => $properties,
         ];
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function Status($status)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $properties = Property::with('community')->where('status', $status)->get();
+        return [
+            'status' => 200,
+            'message' => 'property recived Successfully',
+            'data' => $properties,
+        ];
     }
 }
