@@ -8,6 +8,7 @@ use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
 class AccessTokenController extends Controller
@@ -21,7 +22,7 @@ class AccessTokenController extends Controller
         $request->validate([
             'first_name' => 'required| string',
             'last_name' => 'required| string',
-            'email' => 'required| email| unique:users,email',
+            'email' => 'required|unique:users,email|email',
             'country' => 'required',
             'city' => 'required',
             'mobile_number' => 'required| string ',
@@ -29,13 +30,18 @@ class AccessTokenController extends Controller
             'password_confirmation' ,  
             'agree' => 'required',
         ]);
-        
+        $request->merge([
+            'password' => Hash::make($request->password)
+        ]);
+
+      
+        return $request;
         $user = User::create($request->all());
         return  response()->json([
             'status' => '201',
-            'message' => 'send code to database',
+            'message' => 'please send code to database',
             'data' => ''
-        ], 200);
+        ], 201);
 
     }
 
@@ -126,18 +132,19 @@ class AccessTokenController extends Controller
         $request->validate([
             'email' => ['required'],
             'device_name' => ['required'],
+            'password' => 'required'
         ]);
         $email = trim($request->email);
 
         $user = User::where('email', $email)
             ->first();
-
-            if (!$user) {
+                  
+            if (!$user || !Hash::check($request->password, $user->password)) {
                 // RateLimiter::hit($this->throttleKey());
                 return  response()->json(
                     [
                         'status' => '404',
-                        'message' => 'This member not found',
+                        'message' => 'your email or password not valid',
                         'data' => null
                     ],
                     404
