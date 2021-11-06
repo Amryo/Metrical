@@ -39,12 +39,15 @@ return [
             'driver' => 'local',
             'root' => storage_path('app/public'),
             'url' => env('APP_URL') . '/storage',
+<<<<<<< HEAD
             'visibility' => 'public',
         ],
         'uploads' => [
             'driver' => 'local',
             'root' => public_path('uploads'),
             'url' => env('APP_URL') . '/uploads',
+=======
+>>>>>>> 44daa1bc974a6f5e74d13698ba012756b802f4e8
             'visibility' => 'public',
         ],
 
@@ -57,6 +60,14 @@ return [
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
+        ],
+
+        'upload' => [
+            'driver' => 'local',
+            'root' => public_path('uploads'),
+            'url' => env('APP_URL') . '/uploads',
+            'visibility' => 'public',
+
         ],
 
     ],

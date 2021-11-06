@@ -31,12 +31,18 @@ class AccessTokenController extends Controller
             'password_confirmation',
             'agree' => 'required',
         ]);
+        $request->merge([
+            'password' => Hash::make($request->password)
+        ]);
+
+
+
         $user = User::create($request->all());
         return  response()->json([
             'status' => '201',
             'message' => 'please send code to database',
             'data' => ''
-        ], 200);
+        ], 201);
     }
 
     public function sendCode(Request $request)
@@ -129,12 +135,12 @@ class AccessTokenController extends Controller
         $user = User::where('email', $email)
             ->first();
 
-        if (!$user) {
+        if (!$user || !Hash::check($request->password, $user->password)) {
             // RateLimiter::hit($this->throttleKey());
             return  response()->json(
                 [
                     'status' => '404',
-                    'message' => 'This member not found',
+                    'message' => 'your email or password not valid',
                     'data' => null
                 ],
                 404
@@ -283,7 +289,11 @@ class AccessTokenController extends Controller
             }
             $uploadedFile = $request->file('passport');
 
+<<<<<<< HEAD
             $passport_copy = $uploadedFile->store('/', 'uploads');
+=======
+            $passport_copy = $uploadedFile->store('/', 'upload');
+>>>>>>> 44daa1bc974a6f5e74d13698ba012756b802f4e8
             $request->merge([
                 'passport_copy' => $passport_copy
             ]);
@@ -295,7 +305,11 @@ class AccessTokenController extends Controller
             }
             $uploadedFile = $request->file('visa');
 
+<<<<<<< HEAD
             $visa_copy = $uploadedFile->store('/', 'uploads');
+=======
+            $visa_copy = $uploadedFile->store('/', 'upload');
+>>>>>>> 44daa1bc974a6f5e74d13698ba012756b802f4e8
             $request->merge([
                 'visa_copy' => $visa_copy
             ]);
@@ -344,7 +358,11 @@ class AccessTokenController extends Controller
             }
             $uploadedFile = $request->file('passport');
 
+<<<<<<< HEAD
             $passport_copy = $uploadedFile->store('/', 'uploads');
+=======
+            $passport_copy = $uploadedFile->store('/', 'upload');
+>>>>>>> 44daa1bc974a6f5e74d13698ba012756b802f4e8
             $request->merge([
                 'passport_copy' => $passport_copy
             ]);
@@ -356,7 +374,11 @@ class AccessTokenController extends Controller
             }
             $uploadedFile = $request->file('title_dead');
 
+<<<<<<< HEAD
             $title_dead_copy = $uploadedFile->store('/', 'uploads');
+=======
+            $title_dead_copy = $uploadedFile->store('/', 'upload');
+>>>>>>> 44daa1bc974a6f5e74d13698ba012756b802f4e8
             $request->merge([
                 'title_dead_copy' => $title_dead_copy
             ]);
@@ -382,4 +404,8 @@ class AccessTokenController extends Controller
             200
         );
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 44daa1bc974a6f5e74d13698ba012756b802f4e8

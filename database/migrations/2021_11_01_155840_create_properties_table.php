@@ -21,13 +21,14 @@ class CreatePropertiesTable extends Migration
             $table->unsignedFloat('area');
             $table->string('reference');
             $table->string('feminizations');
-            $table->enum('type', ['house', 'apartment']);
-            $table->enum('offer_type', ['sale', 'rent', 'both']);
+
+            $table->boolean('is_shortterm');
             $table->unsignedInteger('bedroom')->default(0);
             $table->unsignedInteger('bathroom')->default(0);
-            $table->timestamp('date_added');
-            $table->string('address');
-            $table->double('price', 8, 2);
+            $table->date('date_added');
+            $table->string('address_ar');
+            $table->string('address_en');
+            $table->string('address_gr');
             $table->text('description_ar')->nullable();
             $table->text('description_en')->nullable();
             $table->text('description_gr')->nullable();
@@ -35,10 +36,15 @@ class CreatePropertiesTable extends Migration
             $table->string('location_latitude');
             $table->string('location_longitude');
             $table->string('image')->nullable();
-            $table->enum('status', ['under_constraction', 'ready']);
+
+            $table->enum('type', ['house', 'apartment']);
+            $table->enum('offer_type', ['sale', 'rent', 'both']);
+            // 0 is under Contruction , 1 is Ready
+            $table->enum('status', [0, 1]);
+            $table->integer('gate');
             //forignK
             $table->foreignId('community_id')->constrained('communities')->cascadeOnDelete();
-            $table->foreignId('owner_id')->constrained('owners')->nullable()->cascadeOnDelete();
+            $table->foreignId('owner_id')->nullable()->constrained('owners')->cascadeOnDelete();
             $table->timestamps();
         });
     }
