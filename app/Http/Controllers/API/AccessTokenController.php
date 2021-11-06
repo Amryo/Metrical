@@ -274,8 +274,8 @@ class AccessTokenController extends Controller
         ]);
         $request->validate([
             'community_id' => 'required|exists:communities,id',
-            'passport' => 'required| image',
-            'visa' => 'required | image',
+            'passport' => 'required| file',
+            'visa' => 'required | file',
             'unit_number' => 'required',
             'unit_number' => 'required',
         ]);

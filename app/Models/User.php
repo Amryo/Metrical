@@ -12,7 +12,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    
+
 
     protected $fillable = [
         'name',
@@ -44,4 +44,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function tenant()
+    {
+        return $this->hasOne(Tenant::class, 'user_id');
+    }
+    public function owner()
+    {
+        return $this->hasOne(Owner::class, 'user_id');
+    }
 }

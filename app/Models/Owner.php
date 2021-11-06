@@ -22,4 +22,9 @@ class Owner extends Model
     {
         return $this->belongsTo(User::class, 'users_id', 'id');
     }
+
+    public function property()
+    {
+        return $this->hasMany(Property::class, 'owner_id', 'id');
+    }
 }
