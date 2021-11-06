@@ -8,6 +8,7 @@ use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
 class AccessTokenController extends Controller
@@ -22,7 +23,7 @@ class AccessTokenController extends Controller
         $request->validate([
             'first_name' => 'required| string',
             'last_name' => 'required| string',
-            'email' => 'required| email| unique:users,email',
+            'email' => 'required|unique:users,email|email',
             'country' => 'required',
             'city' => 'required',
             'mobile_number' => 'required| string ',
@@ -30,11 +31,10 @@ class AccessTokenController extends Controller
             'password_confirmation',
             'agree' => 'required',
         ]);
-
         $user = User::create($request->all());
         return  response()->json([
             'status' => '201',
-            'message' => 'send code to database',
+            'message' => 'please send code to database',
             'data' => ''
         ], 200);
     }
@@ -122,6 +122,7 @@ class AccessTokenController extends Controller
         $request->validate([
             'email' => ['required'],
             'device_name' => ['required'],
+            'password' => 'required'
         ]);
         $email = trim($request->email);
 
