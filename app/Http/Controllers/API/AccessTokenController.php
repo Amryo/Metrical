@@ -289,7 +289,11 @@ class AccessTokenController extends Controller
             }
             $uploadedFile = $request->file('passport');
 
+<<<<<<< HEAD
+            $passport_copy = $uploadedFile->store('/', 'uploads');
+=======
             $passport_copy = $uploadedFile->store('/', 'upload');
+>>>>>>> 44daa1bc974a6f5e74d13698ba012756b802f4e8
             $request->merge([
                 'passport_copy' => $passport_copy
             ]);
@@ -301,7 +305,11 @@ class AccessTokenController extends Controller
             }
             $uploadedFile = $request->file('visa');
 
+<<<<<<< HEAD
+            $visa_copy = $uploadedFile->store('/', 'uploads');
+=======
             $visa_copy = $uploadedFile->store('/', 'upload');
+>>>>>>> 44daa1bc974a6f5e74d13698ba012756b802f4e8
             $request->merge([
                 'visa_copy' => $visa_copy
             ]);
@@ -350,7 +358,11 @@ class AccessTokenController extends Controller
             }
             $uploadedFile = $request->file('passport');
 
+<<<<<<< HEAD
+            $passport_copy = $uploadedFile->store('/', 'uploads');
+=======
             $passport_copy = $uploadedFile->store('/', 'upload');
+>>>>>>> 44daa1bc974a6f5e74d13698ba012756b802f4e8
             $request->merge([
                 'passport_copy' => $passport_copy
             ]);
@@ -362,7 +374,11 @@ class AccessTokenController extends Controller
             }
             $uploadedFile = $request->file('title_dead');
 
+<<<<<<< HEAD
+            $title_dead_copy = $uploadedFile->store('/', 'uploads');
+=======
             $title_dead_copy = $uploadedFile->store('/', 'upload');
+>>>>>>> 44daa1bc974a6f5e74d13698ba012756b802f4e8
             $request->merge([
                 'title_dead_copy' => $title_dead_copy
             ]);
@@ -388,4 +404,8 @@ class AccessTokenController extends Controller
             200
         );
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 44daa1bc974a6f5e74d13698ba012756b802f4e8
