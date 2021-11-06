@@ -25,7 +25,16 @@ class User extends Authenticatable
         'city',
         'mobile_number',
         'password',
-        'status'
+        'first_name',
+        'last_name',
+        'country',
+        'city',
+        'mobile_number',
+        'image_url',
+        'type',
+        'status',
+        'code',
+        'email_verified_at'
     ];
 
     /**
