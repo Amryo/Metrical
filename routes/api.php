@@ -21,20 +21,21 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('auth/signUp', [AccessTokenController::class, 'signUp']);
-Route::post('auth/code/send',[AccessTokenController::class , 'sendCode']);
-Route::post('auth/code/check',[AccessTokenController::class , 'checkCode']);
+Route::post('auth/code/send', [AccessTokenController::class, 'sendCode']);
+Route::post('auth/code/check', [AccessTokenController::class, 'checkCode']);
 
-Route::post('auth/password/before-update',[AccessTokenController::class , 'beforeUpdate']);
-Route::post('auth/password/update',[AccessTokenController::class , 'updatePassword']);
-Route::post('auth/tokens', [AccessTokenController::class , 'store']);
+Route::post('auth/password/before-update', [AccessTokenController::class, 'beforeUpdate']);
+Route::post('auth/password/update', [AccessTokenController::class, 'updatePassword']);
+// 1|LgxBjuhPXyRQiPdnQO1w2ziZj4UmdKjTNuBeFADm
+Route::post('auth/tokens', [AccessTokenController::class, 'store']);
 Route::delete('auth/tokens', [AccessTokenController::class, 'destroy'])
     ->middleware('auth:sanctum');
 
-Route::post('auth/request/tenant', [AccessTokenController::class , 'requestAsTenant'])
-->middleware('auth:sanctum');
+Route::post('auth/request/tenant', [AccessTokenController::class, 'requestAsTenant'])
+    ->middleware('auth:sanctum');
 
-Route::post('auth/request/owner', [AccessTokenController::class , 'requestAsOwner'])
-->middleware('auth:sanctum');
+Route::post('auth/request/owner', [AccessTokenController::class, 'requestAsOwner'])
+    ->middleware('auth:sanctum');
 
 
 

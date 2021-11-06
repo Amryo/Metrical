@@ -18,9 +18,14 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
+        'country',
+        'city',
+        'mobile_number',
         'password',
+        'status'
     ];
 
     /**
@@ -41,4 +46,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function tenant()
+    {
+        return $this->hasOne(Tenant::class, 'user_id');
+    }
+    public function owner()
+    {
+        return $this->hasOne(Owner::class, 'user_id');
+    }
 }
