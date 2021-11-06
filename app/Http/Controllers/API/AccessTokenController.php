@@ -18,7 +18,8 @@ class AccessTokenController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function signUp(Request $request){
+    public function signUp(Request $request)
+    {
         $request->validate([
             'first_name' => 'required| string',
             'last_name' => 'required| string',
@@ -27,22 +28,21 @@ class AccessTokenController extends Controller
             'city' => 'required',
             'mobile_number' => 'required| string ',
             'password' => [Password::min(8), 'confirmed', 'required'],
-            'password_confirmation' ,  
+            'password_confirmation',
             'agree' => 'required',
         ]);
         $request->merge([
             'password' => Hash::make($request->password)
         ]);
 
-      
-        return $request;
+
+
         $user = User::create($request->all());
         return  response()->json([
             'status' => '201',
             'message' => 'please send code to database',
             'data' => ''
         ], 201);
-
     }
 
     public function sendCode(Request $request)
@@ -53,7 +53,7 @@ class AccessTokenController extends Controller
         ]);
         $email = trim($request->email);
         $user = User::where('email', $email)->first();
-        if(!$user){
+        if (!$user) {
 
             return  response()->json(
                 [
@@ -77,7 +77,6 @@ class AccessTokenController extends Controller
             ],
             201
         );
-
     }
 
     public function checkCode(Request $request)
@@ -86,12 +85,12 @@ class AccessTokenController extends Controller
             'code' => 'required',
             'email' => 'required'
         ]);
-       
+
 
         $email = trim($request->email);
         $user = User::where('email', $email)->first();
 
-        if($user->code === $request->code){
+        if ($user->code === $request->code) {
 
             $user->update([
                 'email_verified_at' => now()
@@ -105,8 +104,6 @@ class AccessTokenController extends Controller
                 ],
                 200
             );
-
-            
         }
         return  response()->json(
             [
@@ -116,10 +113,9 @@ class AccessTokenController extends Controller
             ],
             401
         );
-
     }
 
-    
+
 
     /**
      * Store a newly created resource in storage.
@@ -138,30 +134,30 @@ class AccessTokenController extends Controller
 
         $user = User::where('email', $email)
             ->first();
-                  
-            if (!$user || !Hash::check($request->password, $user->password)) {
-                // RateLimiter::hit($this->throttleKey());
-                return  response()->json(
-                    [
-                        'status' => '404',
-                        'message' => 'your email or password not valid',
-                        'data' => null
-                    ],
-                    404
-                );
-            }
-            $token = $user->createToken($request->device_name);
-            $user->update([
-                'code' => null
-            ]);
-            return  response()->json([
-                'status' => '200',
-                'message' => 'Login success',
-                'data' => [
-                    'token' => $token->plainTextToken,
-                    'user' =>  $user,
-                ]
-            ], 200);
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            // RateLimiter::hit($this->throttleKey());
+            return  response()->json(
+                [
+                    'status' => '404',
+                    'message' => 'your email or password not valid',
+                    'data' => null
+                ],
+                404
+            );
+        }
+        $token = $user->createToken($request->device_name);
+        $user->update([
+            'code' => null
+        ]);
+        return  response()->json([
+            'status' => '200',
+            'message' => 'Login success',
+            'data' => [
+                'token' => $token->plainTextToken,
+                'user' =>  $user,
+            ]
+        ], 200);
     }
 
     /**
@@ -207,7 +203,7 @@ class AccessTokenController extends Controller
     public function destroy()
     {
         $user = Auth::guard('sanctum')->user();
-        
+
         // Revoke (delete) all user tokens
         //$user->tokens()->delete();
 
@@ -228,7 +224,7 @@ class AccessTokenController extends Controller
         $email = trim($request->email);
         $user = User::where('email', $email)->first();
 
-        if(!$user){
+        if (!$user) {
             return  response()->json(
                 [
                     'status' => '404',
@@ -246,8 +242,6 @@ class AccessTokenController extends Controller
             ],
             200
         );
-
-
     }
 
     public function updatePassword(Request $request)
@@ -289,24 +283,24 @@ class AccessTokenController extends Controller
         $user = Auth::guard('sanctum')->user();
 
         if ($request->hasFile('passport')) {
-            if($user->passport_copy !== null){
+            if ($user->passport_copy !== null) {
 
                 unlink(public_path('uploads/' . $user->passport_copy));
             }
             $uploadedFile = $request->file('passport');
-            
+
             $passport_copy = $uploadedFile->store('/', 'upload');
             $request->merge([
                 'passport_copy' => $passport_copy
             ]);
         }
         if ($request->hasFile('visa')) {
-            if($user->visa_copy !== null){
+            if ($user->visa_copy !== null) {
 
                 unlink(public_path('uploads/' . $user->visa_copy));
             }
             $uploadedFile = $request->file('visa');
-            
+
             $visa_copy = $uploadedFile->store('/', 'upload');
             $request->merge([
                 'visa_copy' => $visa_copy
@@ -319,9 +313,9 @@ class AccessTokenController extends Controller
         $user1->update([
             'type' => 2,
         ]);
-      
+
         Tenant::create($request->all());
-        
+
         return  response()->json(
             [
                 'status' => '200',
@@ -347,27 +341,27 @@ class AccessTokenController extends Controller
         ]);
 
         $user = Auth::guard('sanctum')->user();
-        
-     
+
+
         if ($request->hasFile('passport')) {
-            if($user->passport_copy !== null){
+            if ($user->passport_copy !== null) {
 
                 unlink(public_path('uploads/' . $user->passport_copy));
             }
             $uploadedFile = $request->file('passport');
-            
+
             $passport_copy = $uploadedFile->store('/', 'upload');
             $request->merge([
                 'passport_copy' => $passport_copy
             ]);
         }
         if ($request->hasFile('title_dead')) {
-            if($user->title_dead_copy !== null){
+            if ($user->title_dead_copy !== null) {
 
                 unlink(public_path('uploads/' . $user->title_dead_copy));
             }
             $uploadedFile = $request->file('title_dead');
-            
+
             $title_dead_copy = $uploadedFile->store('/', 'upload');
             $request->merge([
                 'title_dead_copy' => $title_dead_copy
@@ -380,11 +374,11 @@ class AccessTokenController extends Controller
         $user1->update([
             'type' => 1,
         ]);
-      
+
 
         Owner::create($request->all());
-        
-        
+
+
         return  response()->json(
             [
                 'status' => '200',
@@ -394,6 +388,4 @@ class AccessTokenController extends Controller
             200
         );
     }
-
-    
 }

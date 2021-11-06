@@ -17,7 +17,6 @@ class CreateAmenitiesTable extends Migration
             $table->id();
             $table->string('name');
             $table->enum('status', [0, 1])->nullable();
-            $table->foreignId('property_id')->constrained('properties', 'id')->cascadeOnDelete();
             $table->timestamps();
         });
     }

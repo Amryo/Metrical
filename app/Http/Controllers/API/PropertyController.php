@@ -12,12 +12,10 @@ class PropertyController extends Controller
     public function index()
     {
 
-        $properties = Property::get();
-
-
+        $properties = Property::paginate(1);
         return [
             'status' => 200,
-            'message' => 'Properties recived Successfully',
+            'message' => __('messages.properties'),
             'data' => $properties,
         ];
     }
@@ -30,7 +28,7 @@ class PropertyController extends Controller
 
         return [
             'status' => 200,
-            'message' => 'property recived Successfully',
+            'message' => __('messages.properties'),
             'data' => $properties,
         ];
     }
@@ -40,7 +38,7 @@ class PropertyController extends Controller
         $properties = Property::with('community')->where('status', $status)->get();
         return [
             'status' => 200,
-            'message' => 'property recived Successfully',
+            'message' => __('messages.properties'),
             'data' => $properties,
         ];
     }

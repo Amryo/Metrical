@@ -3,6 +3,9 @@
 use App\Http\Controllers\Api\AccessTokenController;
 use App\Http\Controllers\API\AmenityController;
 use App\Http\Controllers\API\CommunityController;
+use App\Http\Controllers\API\EnquiryController;
+use App\Http\Controllers\API\EventController;
+use App\Http\Controllers\API\NewsController;
 use App\Http\Controllers\API\PropertyController;
 use App\Http\Controllers\API\RentController;
 use Illuminate\Http\Request;
@@ -29,6 +32,9 @@ Route::apiResource('properties', PropertyController::class)->middleware('localiz
 Route::get('properties/status/{status}', [PropertyController::class, 'Status'])->middleware('localization');
 Route::apiResource('rents', RentController::class)->middleware('localization');
 Route::apiResource('amenities', AmenityController::class)->middleware('localization');
+Route::apiResource('news', NewsController::class)->middleware('localization');
+Route::apiResource('events', EventController::class)->middleware('localization');
+Route::apiResource('enquiry', EnquiryController::class)->middleware('localization');
 
 
 

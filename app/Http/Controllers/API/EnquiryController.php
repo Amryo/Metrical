@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CommunityCollection;
-use App\Models\Community;
+use App\Models\Enquiry;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class CommunityController extends Controller
+class EnquiryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,13 +16,7 @@ class CommunityController extends Controller
      */
     public function index()
     {
-
-        $community = Community::get();
-        return [
-            'status' => 200,
-            'message' => __('messages.communities'),
-            'community' => $community,
-        ];
+        //
     }
 
     /**
@@ -33,7 +27,16 @@ class CommunityController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->merge([
+            'user_id' => Auth::id() ?? 1,
+        ]);
+        $enquiry = Enquiry::create($request->all());
+
+        return [
+            'status' => 201,
+            'message' => __('messages.enquiry'),
+            'enquiry' => $enquiry,
+        ];
     }
 
     /**
@@ -44,15 +47,7 @@ class CommunityController extends Controller
      */
     public function show($id)
     {
-
-        $community = Community::with('properties')->where('id', $id)->get();
-
-
-        return [
-            'status' => 200,
-            'message' => __('messages.communities'),
-            'data' => $community,
-        ];
+        //
     }
 
     /**

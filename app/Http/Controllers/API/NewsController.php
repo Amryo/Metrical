@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CommunityCollection;
-use App\Models\Community;
+use App\Models\News;
 use Illuminate\Http\Request;
 
-class CommunityController extends Controller
+class NewsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,12 +15,11 @@ class CommunityController extends Controller
      */
     public function index()
     {
-
-        $community = Community::get();
+        $news = News::get();
         return [
             'status' => 200,
-            'message' => __('messages.communities'),
-            'community' => $community,
+            'message' => __('messages.news'),
+            'data' => $news,
         ];
     }
 
@@ -44,15 +42,7 @@ class CommunityController extends Controller
      */
     public function show($id)
     {
-
-        $community = Community::with('properties')->where('id', $id)->get();
-
-
-        return [
-            'status' => 200,
-            'message' => __('messages.communities'),
-            'data' => $community,
-        ];
+        //
     }
 
     /**

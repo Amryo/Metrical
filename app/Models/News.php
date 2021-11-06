@@ -13,5 +13,20 @@ class News extends Model
     {
         return $this->belongsTo(Community::class, 'community_id', 'id');
     }
-    
+
+
+    public function toArray()
+    {
+
+        $title = 'title_' . strval($this->name . app()->getLocale());
+        $description = 'description_' . strval($this->name . app()->getLocale());
+
+        return [
+            'title' => $this->$title,
+            'description' => $this->$description,
+            'main_image' => $this->image_url,
+            'images' => $this->images,
+            'community_id' => $this->community_id,
+        ];
+    }
 }

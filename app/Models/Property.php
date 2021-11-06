@@ -20,7 +20,7 @@ class Property extends Model
     }
     public function amenity()
     {
-        return $this->hasMany(Amenity::class, 'property_id', 'id');
+        return $this->belongsToMany(Amenity::class, 'amenities_properties ', 'property_id', 'amenity_id');
     }
 
 

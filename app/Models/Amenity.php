@@ -11,6 +11,6 @@ class Amenity extends Model
     use HasFactory;
     public function property()
     {
-        return $this->belongsTo(Property::class, 'property_id', 'id');
+        return $this->belongsToMany(Property::class, 'amenities_properties', 'amenity_id', 'property_id');
     }
 }
