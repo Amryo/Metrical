@@ -26,24 +26,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-<<<<<<< HEAD
-Route::post('auth/signUp', [AccessTokenController::class, 'signUp']);
-Route::post('auth/code/send', [AccessTokenController::class, 'sendCode']);
-Route::post('auth/code/check', [AccessTokenController::class, 'checkCode']);
-
-Route::post('auth/password/before-update', [AccessTokenController::class, 'beforeUpdate']);
-Route::post('auth/password/update', [AccessTokenController::class, 'updatePassword']);
-// 1|LgxBjuhPXyRQiPdnQO1w2ziZj4UmdKjTNuBeFADm
-Route::post('auth/tokens', [AccessTokenController::class, 'store']);
-Route::delete('auth/tokens', [AccessTokenController::class, 'destroy'])
-    ->middleware('auth:sanctum');
-
-Route::post('auth/request/tenant', [AccessTokenController::class, 'requestAsTenant'])
-    ->middleware('auth:sanctum');
-
-Route::post('auth/request/owner', [AccessTokenController::class, 'requestAsOwner'])
-    ->middleware('auth:sanctum');
-=======
 //API (Amr Younis)
 Route::apiResource('communities', CommunityController::class)->middleware('localization');
 Route::apiResource('properties', PropertyController::class)->middleware('localization');
@@ -56,7 +38,6 @@ Route::apiResource('enquiry', EnquiryController::class)->middleware('localizatio
 
 
 
->>>>>>> 44daa1bc974a6f5e74d13698ba012756b802f4e8
 
 //Auth Request (Mohammed Obaid)
 Route::post('auth/signUp', [AccessTokenController::class, 'signUp']);
@@ -72,9 +53,5 @@ Route::delete('auth/tokens', [AccessTokenController::class, 'destroy'])
 Route::post('auth/request/tenant', [AccessTokenController::class, 'requestAsTenant'])
     ->middleware('auth:sanctum');
 
-<<<<<<< HEAD
-Route::apiResource('comminications', CommunityController::class);
-=======
 Route::post('auth/request/owner', [AccessTokenController::class, 'requestAsOwner'])
     ->middleware('auth:sanctum');
->>>>>>> 44daa1bc974a6f5e74d13698ba012756b802f4e8
