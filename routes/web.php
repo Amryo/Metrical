@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Admin\CommunitiesController;
+use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\API\CommunityController;
+use App\Http\Controllers\EventsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,6 +27,8 @@ Route::get('admin-panel', function () {
 });
 
 Route::resource('admin/communities', CommunitiesController::class);
+Route::resource('admin/events', EventsController::class);
+Route::resource('admin/news', NewsController::class);
 
 Route::get('admin/binding-users', [UsersController::class, 'index'])->name('binding.users');
 Route::get('admin/tenants-users', [UsersController::class, 'tenants'])->name('tenants.users');

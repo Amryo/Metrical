@@ -26,11 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('image_url')->nullable();
             // 0 => 'normal user' , 1=> 'owner user' , 2 =>'tenant' , 3 => 'admin'
             $table->enum('type', [0, 1, 2, 3]);
-<<<<<<< HEAD
-            // 0=> 'pending' , '1' => 'accept', '2' => 'refuse' 
-=======
             // 0=> 'pending' , '1' => 'accept', '1' => 'refuse' 
->>>>>>> 44daa1bc974a6f5e74d13698ba012756b802f4e8
             $table->enum('status', [0, 1, 2]);
             $table->string('code', 6)->nullable();
 

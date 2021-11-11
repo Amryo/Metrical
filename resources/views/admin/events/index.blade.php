@@ -1,4 +1,67 @@
 <x-admin-layout>
+    @if(Session::has('create'))
+    <div class="d-flex flex-column-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                        <div class="alert alert-custom alert-primary fade show" role="alert">
+                            <div class="alert-icon"><i class="flaticon-warning"></i></div>
+                            <div class="alert-text">{{ Session::get('create') }}</div>
+                            <div class="alert-close">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true"><i class="ki ki-close"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+    @if(Session::has('edit'))
+    <div class="d-flex flex-column-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                        <div class="alert alert-custom alert-primary fade show" role="alert">
+                            <div class="alert-icon"><i class="flaticon-warning"></i></div>
+                            <div class="alert-text">{{ Session::get('edit') }}</div>
+                            <div class="alert-close">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true"><i class="ki ki-close"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+    @if(Session::has('delete'))
+    <div class="d-flex flex-column-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                        <div class="alert alert-custom alert-danger fade show" role="alert">
+                            <div class="alert-icon"><i class="flaticon-warning"></i></div>
+                            <div class="alert-text">{{ Session::get('delete') }}</div>
+                            <div class="alert-close">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true"><i class="ki ki-close"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
     <div class="d-flex flex-column-fluid">
         <div class="container">
             <div class="row">
@@ -15,8 +78,7 @@
                                 </h3>
                                 <div class="card-toolbar">
                                     <!--begin::Button-->
-                                    <a href="{{route('communities.create')}}"
-                                        class="btn btn-primary font-weight-bolder">
+                                    <a href="{{route('events.create')}}" class="btn btn-primary font-weight-bolder">
                                         <span class="svg-icon svg-icon-md">
                                             <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
@@ -93,17 +155,21 @@
                                                     </label>
                                                 </th>
                                                 <th class="pl-0" style="min-width: 100px">#</th>
-                                                <th style="min-width: 120px">Image</th>
-                                                <th style="min-width: 120px">English Name</th>
-                                                <th style="min-width: 120px">Germany Name</th>
-                                                <th style="min-width: 120px">Arabic Name</th>
-                                                <th style="min-width: 120px">Status</th>
-                                                <th style="min-width: 130px">Readness Percentage</th>
+                                                <th style="min-width: 120px">English Title</th>
+                                                <th style="min-width: 120px">Germany Title</th>
+                                                <th style="min-width: 120px">Arabic Title</th>
+                                                <th style="min-width: 120px">English Description</th>
+                                                <th style="min-width: 120px">Germany Description</th>
+                                                <th style="min-width: 120px">Arabic Description</th>
+                                                <th style="min-width: 120px">Community Name</th>
+                                                <th style="min-width: 120px">Address</th>
+                                                <th style="min-width: 120px">Start Date</th>
+                                                <th style="min-width: 120px">End Date</th>
                                                 <th class="pr-0 text-right" style="min-width: 160px">action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($communities as $community)
+                                            @foreach ($events as $event)
                                             <tr>
                                                 <td class="pl-0 py-6">
                                                     <label class="checkbox checkbox-lg checkbox-inline">
@@ -113,41 +179,63 @@
                                                 </td>
                                                 <td class="pl-0">
                                                     <a href="#"
-                                                        class="text-dark-75 font-weight-bolder text-hover-primary font-size-lg">{{$community->id}}</a>
+                                                        class="text-dark-75 font-weight-bolder text-hover-primary font-size-lg">{{$event->id}}</a>
                                                 </td>
+
                                                 <td>
-                                                    <span style="border-radius: 3px;"
-                                                        class="text-dark-75 font-weight-bolder d-block font-size-lg"><img
-                                                            style="width: 80px; height:60px; overflow:hidden;"
-                                                            src="{{ asset('uploads/' . $community->image)}}"
-                                                            alt=""></span>
+                                                    <span
+                                                        class="text-dark-75 font-weight-bolder d-block font-size-lg">{{$event->title_en}}</span>
 
                                                 </td>
                                                 <td>
                                                     <span
-                                                        class="text-dark-75 font-weight-bolder d-block font-size-lg">{{$community->name_en}}</span>
+                                                        class="text-dark-75 font-weight-bolder d-block font-size-lg">{{$event->title_gr}}</span>
 
                                                 </td>
                                                 <td>
                                                     <span
-                                                        class="text-dark-75 font-weight-bolder d-block font-size-lg">{{$community->name_gr}}</span>
+                                                        class="text-dark-75 font-weight-bolder d-block font-size-lg">{{$event->title_ar}}</span>
+
+                                                </td>
+
+                                                <td>
+                                                    <span
+                                                        class="text-dark-75 font-weight-bolder d-block font-size-lg">{{$event->description_en}}</span>
 
                                                 </td>
                                                 <td>
                                                     <span
-                                                        class="text-dark-75 font-weight-bolder d-block font-size-lg">{{$community->name_ar}}</span>
+                                                        class="text-dark-75 font-weight-bolder d-block font-size-lg">{{$event->description_gr}}</span>
 
                                                 </td>
                                                 <td>
-                                                    <span class="label label-lg label-light-success label-inline">
-                                                        @if($community->status == 0)
-                                                        Under-Construction @endif @if($community->status == 1)
-                                                        Ready @endif</span>
+                                                    <span
+                                                        class="text-dark-75 font-weight-bolder d-block font-size-lg">{{$event->description_ar}}</span>
+
                                                 </td>
                                                 <td>
                                                     <span
-                                                        class="label label-lg label-light-success label-inline">{{$community->readness_percentage}}%</span>
+                                                        class="text-dark-75 font-weight-bolder d-block font-size-lg">{{$event->community->name_en}}</span>
+
                                                 </td>
+                                                <td>
+                                                    <span
+                                                        class="text-dark-75 font-weight-bolder d-block font-size-lg">{{$event->address}}</span>
+
+                                                </td>
+                                                <td>
+                                                    <span
+                                                        class="text-dark-75 font-weight-bolder d-block font-size-lg">{{$event->start_date}}</span>
+
+                                                </td>
+                                                <td>
+                                                    <span
+                                                        class="text-dark-75 font-weight-bolder d-block font-size-lg">{{$event->end_date}}</span>
+
+                                                </td>
+
+
+
                                                 <td class="pr-0 text-right">
                                                     <a href="#" class="btn btn-icon btn-light btn-hover-primary btn-sm">
                                                         <span class="svg-icon svg-icon-md svg-icon-primary">
@@ -169,7 +257,7 @@
                                                             <!--end::Svg Icon-->
                                                         </span>
                                                     </a>
-                                                    <a href="{{route('communities.edit' ,$community->id)}}"
+                                                    <a href="{{route('events.edit' ,$event->id)}}"
                                                         class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3">
                                                         <span class="svg-icon svg-icon-md svg-icon-primary">
                                                             <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Write.svg-->
@@ -193,8 +281,7 @@
                                                         </span>
                                                     </a>
                                                     <a class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3">
-                                                        <form
-                                                            action="{{ route('communities.destroy', $community->id) }}"
+                                                        <form action="{{ route('events.destroy', $event->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('delete')
@@ -264,6 +351,9 @@
                     </div>
                 </div>
             </div>
+            {{ $events->links() }}
         </div>
     </div>
+
+
 </x-admin-layout>

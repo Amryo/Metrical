@@ -134,9 +134,10 @@
                                 </div>
                             </div>
                             <!--begin::Form-->
-                            <form class="form" action="{{ route('communities.store')}}" method="POST"
+                            <form class="form" action="{{ route('communities.update', $community->id)}}" method="POST"
                                 enctype="multipart/form-data">
                                 @csrf
+                                @method('put')
                                 <div class="card-body">
                                     <div class="card-body">
                                         <div class="form-group row">
@@ -145,7 +146,7 @@
                                             <div class="col-lg-9 col-xl-6">
                                                 <div class="image-input image-input-empty image-input-outline"
                                                     id="kt_image_4"
-                                                    style="background-image: url({{asset('media/users/blank.png')}})">
+                                                    style="background-image: url({{ asset('uploads/' . $community->image ) }})">
                                                     <div class="image-input-wrapper"></div>
                                                     <label
                                                         class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
@@ -181,8 +182,10 @@
                                                 <select name="status" class="form-control selectpicker" data-size="7"
                                                     data-live-search="true">
                                                     <option value="">Select</option>
-                                                    <option value="0">Under Construction</option>
-                                                    <option value="1">Ready</option>
+                                                    <option value="0" @if($community->status == 0) selected @endif>Under
+                                                        Construction</option>
+                                                    <option value="1" @if($community->status == 1) selected @endif>Ready
+                                                    </option>
 
                                                 </select>
                                                 <span class="form-text text-muted">you can select any category </span>
@@ -193,7 +196,7 @@
                                             <label class="col-2 col-form-label">Arabic Name</label>
                                             <div class="col-10">
                                                 <input id="kt_maxlength_1" name="name_ar" class="form-control"
-                                                    type="text" maxlength="25" value="{{$community->name}}"
+                                                    type="text" maxlength="25" value="{{$community->name_ar}}"
                                                     id="example-text-input" />
                                             </div>
                                         </div>
@@ -201,7 +204,7 @@
                                             <label class="col-2 col-form-label">Germany Name</label>
                                             <div class="col-10">
                                                 <input id="kt_maxlength_1" name="name_gr" class="form-control"
-                                                    type="text" maxlength="25" value="{{$community->name}}"
+                                                    type="text" maxlength="25" value="{{$community->name_gr}}"
                                                     id="example-text-input" />
                                             </div>
                                         </div>
@@ -209,7 +212,7 @@
                                             <label class="col-2 col-form-label">English Name</label>
                                             <div class="col-10">
                                                 <input id="kt_maxlength_1" name="name_en" class="form-control"
-                                                    type="text" maxlength="25" value="{{$community->name}}"
+                                                    type="text" maxlength="25" value="{{$community->name_en}}"
                                                     id="example-text-input" />
                                             </div>
                                         </div>
