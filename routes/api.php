@@ -8,6 +8,7 @@ use App\Http\Controllers\API\EventController;
 use App\Http\Controllers\API\NewsController;
 use App\Http\Controllers\API\PropertyController;
 use App\Http\Controllers\API\RentController;
+use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,7 +36,7 @@ Route::apiResource('amenities', AmenityController::class)->middleware('localizat
 Route::apiResource('news', NewsController::class)->middleware('localization');
 Route::apiResource('events', EventController::class)->middleware('localization');
 Route::apiResource('enquiry', EnquiryController::class)->middleware('localization');
-
+Route::apiResource('users', UserController::class)->middleware('localization');
 
 
 

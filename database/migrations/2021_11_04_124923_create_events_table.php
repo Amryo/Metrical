@@ -28,7 +28,9 @@ class CreateEventsTable extends Migration
 
             $table->date('start_date');
             $table->date('end_date');
-
+            
+            $table->string('image_url')->nullable();
+            $table->json('images')->nullable();
             $table->foreignId('community_id')->constrained('communities')->cascadeOnDelete();
 
             $table->timestamps();

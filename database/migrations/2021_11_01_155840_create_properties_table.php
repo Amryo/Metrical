@@ -35,10 +35,14 @@ class CreatePropertiesTable extends Migration
             $table->string('city');
             $table->string('location_latitude');
             $table->string('location_longitude');
-            $table->string('image')->nullable();
+
+
+            $table->string('image_url')->nullable();
+            $table->json('images')->nullable();
 
             $table->enum('type', ['house', 'apartment']);
-            $table->enum('offer_type', ['sale', 'rent', 'both']);
+            
+            $table->enum('offer_type', ['stop', 'sale', 'rent', 'both',]);
             // 0 is under Contruction , 1 is Ready
             $table->enum('status', [0, 1]);
             $table->integer('gate');

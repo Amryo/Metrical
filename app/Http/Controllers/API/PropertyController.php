@@ -12,7 +12,7 @@ class PropertyController extends Controller
     public function index()
     {
 
-        $properties = Property::paginate(1);
+        $properties = Property::with(['community', 'offer'])->paginate(5);
         return [
             'status' => 200,
             'message' => __('messages.properties'),
@@ -23,7 +23,7 @@ class PropertyController extends Controller
 
     public function show($id)
     {
-        $properties = Property::with('community')->where('id', $id)->get();
+        $properties = Property::with(['community', 'offer'])->where('id', $id)->get();
 
 
         return [

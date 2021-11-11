@@ -23,7 +23,14 @@ class Property extends Model
         return $this->belongsToMany(Amenity::class, 'amenities_properties ', 'property_id', 'amenity_id');
     }
 
-
+    public function offer()
+    {
+        return $this->hasMany(Offer::class, 'property_id', 'id');
+    }
+    public function owner()
+    {
+        return $this->belongsTo(Owner::class, 'owner_id', 'id');
+    }
     public function toArray()
     {
         $name = 'name_' . strval($this->name . app()->getLocale());
@@ -45,6 +52,8 @@ class Property extends Model
             'date_added' => $this->date_added,
             'address' => $this->address,
             'status' => $this->status,
+            'location_longitude' => $this->location_longitude,
+            'location_latitude' => $this->location_latitude,
             'price' => $this->price,
             'gate' => $this->gate,
             'community_id' => $this->community_id,
@@ -52,6 +61,9 @@ class Property extends Model
             'city' => $this->city,
             'rent_now' => $rentNow,
             'current_rent' => $rentNow ? Rent::where('id', $this->id)->get() : false,
+            'offer' => Offer::whereHas('property', function ($query) {
+                $query->where('owner_id', $this->owner_id);
+            })->get(),
         ];
     }
 }
