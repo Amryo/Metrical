@@ -279,21 +279,24 @@ class AccessTokenController extends Controller
             'unit_number' => 'required',
             'unit_number' => 'required',
         ]);
-
+        
         $user = Auth::guard('sanctum')->user();
-
+        $user1 = User::findOrFail($request->user_id);
+        $user1->update([
+            'status' => '0',
+        ]);
+        $user1->update([
+            'status' => '0',
+        ]);
+        
         if ($request->hasFile('passport')) {
             if ($user->passport_copy !== null) {
 
                 unlink(public_path('uploads/' . $user->passport_copy));
             }
-            $uploadedFile = $request->file('passport');
+            $passport_copy = $request->file('passport');
 
-<<<<<<< HEAD
-            $passport_copy = $uploadedFile->store('/', 'uploads');
-=======
-            $passport_copy = $uploadedFile->store('/', 'upload');
->>>>>>> 44daa1bc974a6f5e74d13698ba012756b802f4e8
+          
             $request->merge([
                 'passport_copy' => $passport_copy
             ]);
@@ -303,13 +306,9 @@ class AccessTokenController extends Controller
 
                 unlink(public_path('uploads/' . $user->visa_copy));
             }
-            $uploadedFile = $request->file('visa');
+            $visa_copy = $request->file('visa');
 
-<<<<<<< HEAD
-            $visa_copy = $uploadedFile->store('/', 'uploads');
-=======
-            $visa_copy = $uploadedFile->store('/', 'upload');
->>>>>>> 44daa1bc974a6f5e74d13698ba012756b802f4e8
+           
             $request->merge([
                 'visa_copy' => $visa_copy
             ]);
@@ -317,9 +316,8 @@ class AccessTokenController extends Controller
                 'visa_copy' => $visa_copy
             ]);
         }
-        $user1 = User::findOrFail($request->user_id);
         $user1->update([
-            'type' => 2,
+            'type' => '2',
         ]);
 
         Tenant::create($request->all());
@@ -333,6 +331,7 @@ class AccessTokenController extends Controller
             200
         );
     }
+
     public function requestAsOwner(Request $request)
     {
         $request->merge([
@@ -358,11 +357,7 @@ class AccessTokenController extends Controller
             }
             $uploadedFile = $request->file('passport');
 
-<<<<<<< HEAD
             $passport_copy = $uploadedFile->store('/', 'uploads');
-=======
-            $passport_copy = $uploadedFile->store('/', 'upload');
->>>>>>> 44daa1bc974a6f5e74d13698ba012756b802f4e8
             $request->merge([
                 'passport_copy' => $passport_copy
             ]);
@@ -374,21 +369,15 @@ class AccessTokenController extends Controller
             }
             $uploadedFile = $request->file('title_dead');
 
-<<<<<<< HEAD
             $title_dead_copy = $uploadedFile->store('/', 'uploads');
-=======
-            $title_dead_copy = $uploadedFile->store('/', 'upload');
->>>>>>> 44daa1bc974a6f5e74d13698ba012756b802f4e8
-            $request->merge([
-                'title_dead_copy' => $title_dead_copy
-            ]);
+           
             $request->merge([
                 'title_dead_copy' => $title_dead_copy
             ]);
         }
         $user1 = User::findOrFail($request->user_id);
         $user1->update([
-            'type' => 1,
+            'type' => '1',
         ]);
 
 
@@ -404,8 +393,50 @@ class AccessTokenController extends Controller
             200
         );
     }
-<<<<<<< HEAD
+
+    public function terms()
+    {
+       return response()->json([
+          'status' => '200',
+          'message' => 'terms message',
+          'data' => User::$term
+       ]);
+
+    }
+
+
+    public function changePass(Request $request)
+    {
+        $request->validate([
+            'current_pass' => 'required',
+            'password' => [Password::min(8), 'confirmed', 'required'],
+            'password_confirmation',
+        ]);
+
+        $user = Auth::guard('sanctum')->user();
+
+        if (!Hash::check($request->current_pass, $user->password)) {
+            // RateLimiter::hit($this->throttleKey());
+            return  response()->json(
+                [
+                    'status' => '404',
+                    'message' => 'current password not valid',
+                    'data' => null
+                ],
+                404
+            );
+        }
+
+        $user->update([
+            'password' => Hash::make($request->new_pass)
+        ]);
+
+        return response()->json([
+            'status' => '201',
+            'message' => 'password was updated',
+            'date' => ''
+        ],201);
+
+
+    }
 }
-=======
-}
->>>>>>> 44daa1bc974a6f5e74d13698ba012756b802f4e8

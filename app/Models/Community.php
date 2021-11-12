@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Community extends Model
 {
     use HasFactory;
-    protected $fillable = ['name_ar', 'name_en', 'name_gr', 'area', 'location_longitude', 'location_latitude', 'image_url', 'status', 'readness_percentage'];
+    protected $fillable = ['name_ar', 'name_en', 'name_gr', 'area', 'image_url', 'status', 'readness_percentage'];
 
     public function properties()
     {

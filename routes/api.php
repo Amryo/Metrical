@@ -56,3 +56,7 @@ Route::post('auth/request/tenant', [AccessTokenController::class, 'requestAsTena
 
 Route::post('auth/request/owner', [AccessTokenController::class, 'requestAsOwner'])
     ->middleware('auth:sanctum');
+
+Route::get('term',[AccessTokenController::class , 'terms']);   
+Route::post('changePass',[AccessTokenController::class , 'changePass'])
+    ->middleware('auth:sanctum');;   
