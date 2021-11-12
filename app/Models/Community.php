@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Community extends Model
 {
     use HasFactory;
-    protected $fillable = ['name_ar', 'name_en', 'name_gr', 'area', 'image_url', 'status', 'readness_percentage'];
+    protected $fillable = ['name_ar', 'name_en', 'name_gr', 'area', 'location_longitude', 'location_latitude', 'image', 'status', 'readness_percentage'];
 
     public function properties()
     {
@@ -44,6 +44,9 @@ class Community extends Model
 
         $name = 'name_' . strval($this->name . app()->getLocale());
         return [
+            'id' => $this->id,
+            'name_en' => $this->name_en,
+
             'name' => $this->$name,
             'area' => $this->area,
             'location_longitude' => $this->location_longitude,

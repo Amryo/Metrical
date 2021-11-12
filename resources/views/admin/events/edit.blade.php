@@ -134,55 +134,27 @@
                                 </div>
                             </div>
                             <!--begin::Form-->
-                            <form class="form" action="{{ route('communities.store')}}" method="POST"
+                            <form class="form" action="{{ route('events.update', $event->id)}}" method="POST"
                                 enctype="multipart/form-data">
                                 @csrf
+                                @method('put')
                                 <div class="card-body">
                                     <div class="card-body">
-                                        <div class="form-group row">
 
-                                            <label class="col-2 col-form-label">Community Image</label>
-                                            <div class="col-lg-9 col-xl-6">
-                                                <div class="image-input image-input-empty image-input-outline"
-                                                    id="kt_image_4"
-                                                    style="background-image: url({{asset('media/users/blank.png')}})">
-                                                    <div class="image-input-wrapper"></div>
-                                                    <label
-                                                        class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                                                        data-action="change" data-toggle="tooltip" title=""
-                                                        data-original-title="Change avatar">
-                                                        <i class="fa fa-pen icon-sm text-muted"></i>
-                                                        <input name="image_url" type="file" name="profile_avatar"
-                                                            accept=".png, .jpg, .jpeg" />
-                                                        <input type="hidden" name="profile_avatar_remove" />
-                                                    </label>
-                                                    <span
-                                                        class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                                                        data-action="cancel" data-toggle="tooltip"
-                                                        title="Cancel avatar">
-                                                        <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                                    </span>
-                                                    <span
-                                                        class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                                                        data-action="remove" data-toggle="tooltip"
-                                                        title="Remove avatar">
-                                                        <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                                    </span>
-                                                </div>
-                                                <span class="form-text text-muted">Default empty input with blank
-                                                    image</span>
-                                            </div>
-                                        </div>
 
 
                                         <div class="form-group row">
-                                            <label class="col-2 col-form-label">Status</label>
+                                            <label class="col-2 col-form-label">Community</label>
                                             <div class="col-10">
-                                                <select name="status" class="form-control selectpicker" data-size="7"
-                                                    data-live-search="true">
+                                                <select name="community_id" class="form-control selectpicker"
+                                                    data-size="7" data-live-search="true">
                                                     <option value="">Select</option>
-                                                    <option value="0">Under Construction</option>
-                                                    <option value="1">Ready</option>
+                                                    @foreach($communites as $community)
+                                                    <option value="{{ $community->id }}" @if($event->community->name_en
+                                                        == $community->name_en) selected
+                                                        @endif>{{ $community->name_en }}
+                                                    </option>
+                                                    @endforeach
 
                                                 </select>
                                                 <span class="form-text text-muted">you can select any category </span>
@@ -190,45 +162,76 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label class="col-2 col-form-label">Arabic Name</label>
+                                            <label class="col-2 col-form-label">Arabic Title</label>
                                             <div class="col-10">
-                                                <input id="kt_maxlength_1" name="name_ar" class="form-control"
-                                                    type="text" maxlength="25" value="{{$community->name}}"
+                                                <input id="kt_maxlength_1" name="title_ar" class="form-control"
+                                                    type="text" maxlength="25" value="{{$event->title_ar}}"
                                                     id="example-text-input" />
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-2 col-form-label">Germany Name</label>
+                                            <label class="col-2 col-form-label">Germany Title</label>
                                             <div class="col-10">
-                                                <input id="kt_maxlength_1" name="name_gr" class="form-control"
-                                                    type="text" maxlength="25" value="{{$community->name}}"
+                                                <input id="kt_maxlength_1" name="title_gr" class="form-control"
+                                                    type="text" maxlength="25" value="{{$event->title_gr}}"
                                                     id="example-text-input" />
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-2 col-form-label">English Name</label>
+                                            <label class="col-2 col-form-label">English Title</label>
                                             <div class="col-10">
-                                                <input id="kt_maxlength_1" name="name_en" class="form-control"
-                                                    type="text" maxlength="25" value="{{$community->name}}"
+                                                <input id="kt_maxlength_1" name="title_en" class="form-control"
+                                                    type="text" maxlength="25" value="{{$event->title_en}}"
+                                                    id="example-text-input" />
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group row">
+                                            <label class="col-2 col-form-label">Arabic Description</label>
+                                            <div class="col-10">
+                                                <input id="kt_maxlength_1" name="description_ar" class="form-control"
+                                                    type="text" maxlength="25" value="{{$event->description_ar}}"
                                                     id="example-text-input" />
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="example-search-input" class="col-2 col-form-label">Area</label>
+                                            <label class="col-2 col-form-label">Germany Description</label>
                                             <div class="col-10">
-                                                <input id="kt_maxlength_2" name="area" class="form-control"
-                                                    type="number" value="{{$community->area}}"
-                                                    id="example-search-input" />
+                                                <input id="kt_maxlength_1" name="description_gr" class="form-control"
+                                                    type="text" maxlength="25" value="{{$event->description_gr}}"
+                                                    id="example-text-input" />
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="readness_percentage" class="col-2 col-form-label">Readness
-                                                Percentage</label>
+                                            <label class="col-2 col-form-label">English Description</label>
                                             <div class="col-10">
-                                                <input id="kt_maxlength_2" name="readness_percentage"
-                                                    class="form-control" type="number"
-                                                    value="{{$community->readness_percentage}}"
-                                                    id="readness_percentage" />
+                                                <input id="kt_maxlength_1" name="description_en" class="form-control"
+                                                    type="text" maxlength="25" value="{{$event->description_en}}"
+                                                    id="example-text-input" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="example-search-input"
+                                                class="col-2 col-form-label">Adress</label>
+                                            <div class="col-10">
+                                                <input id="kt_maxlength_2" name="address" class="form-control"
+                                                    type="text" value="{{$event->address}}" id="example-search-input" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="start_date" class="col-2 col-form-label">From</label>
+                                            <div class="col-10">
+                                                <input id="kt_maxlength_2" name="start_date" class="form-control"
+                                                    type="date" value="{{$event->start_date}}" id="start_date" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="end_date" class="col-2 col-form-label">To</label>
+                                            <div class="col-10">
+                                                <input id="kt_maxlength_2" name="end_date" class="form-control"
+                                                    type="date" value="{{$event->end_date}}" id="end_date" />
                                             </div>
                                         </div>
 

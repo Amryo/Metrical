@@ -125,6 +125,7 @@ class AccessTokenController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request;
         $request->validate([
             'email' => ['required'],
             'device_name' => ['required'],
@@ -134,7 +135,7 @@ class AccessTokenController extends Controller
 
         $user = User::where('email', $email)
             ->first();
-
+    //    return $user->password;
         if (!$user || !Hash::check($request->password, $user->password)) {
             // RateLimiter::hit($this->throttleKey());
             return  response()->json(
@@ -254,7 +255,7 @@ class AccessTokenController extends Controller
         $email = trim($request->email);
         $user = User::where('email', $email)->first();
         $user->update([
-            'password' => $request->password
+            'password' => Hash::make($request->password) 
         ]);
 
         return  response()->json(
@@ -294,9 +295,9 @@ class AccessTokenController extends Controller
 
                 unlink(public_path('uploads/' . $user->passport_copy));
             }
-            $passport_copy = $request->file('passport');
+            $uploadedFile = $request->file('passport');
 
-          
+            $passport_copy = $uploadedFile->store('/', 'uploads');
             $request->merge([
                 'passport_copy' => $passport_copy
             ]);
@@ -306,9 +307,9 @@ class AccessTokenController extends Controller
 
                 unlink(public_path('uploads/' . $user->visa_copy));
             }
-            $visa_copy = $request->file('visa');
+            $uploadedFile = $request->file('visa');
 
-           
+            $visa_copy = $uploadedFile->store('/', 'uploads');
             $request->merge([
                 'visa_copy' => $visa_copy
             ]);

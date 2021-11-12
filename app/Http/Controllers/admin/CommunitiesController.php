@@ -27,13 +27,13 @@ class CommunitiesController extends Controller
 
     public function store(Request $request)
     {
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
+        if ($request->hasFile('image_url')) {
+            $file = $request->file('image_url');
             $image_path = $file->store('/', [
-                'disk' => 'uploads',
+                'disk' => 'upload',
             ]);
             $request->merge([
-                'image_url' => $image_path,
+                'image' => $image_path,
             ]);
         }
         $community = Community::create($request->all());
@@ -49,7 +49,8 @@ class CommunitiesController extends Controller
     {
         $community = Community::findOrFail($id);
         return view('admin.communities.edit', [
-            'community' => $community
+            'community' => $community,
+            'title' => 'Edit The Community'
         ]);
     }
     public function update(Request $request, $id)
@@ -58,7 +59,7 @@ class CommunitiesController extends Controller
         if ($request->hasFile('image_url')) {
             $file = $request->file('image_url');
             $image_path = $file->store('/', [
-                'disk' => 'uploads',
+                'disk' => 'upload',
             ]);
             $request->merge([
                 'image' => $image_path,
