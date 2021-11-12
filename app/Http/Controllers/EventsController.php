@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Community;
 use App\Models\Event;
+use App\Models\InterestedUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EventsController extends Controller
 {
@@ -60,4 +62,6 @@ class EventsController extends Controller
         $event->delete();
         return redirect()->route('events.index')->with('delete', 'the event is deleted');
     }
+
+    
 }

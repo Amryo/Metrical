@@ -11,7 +11,7 @@ class UsersController extends Controller
     /* binging users */
     public function index()
     {
-        $users = User::where('status', '0')->get();
+        $users = User::where('status', '0')->where('type', '<>' , '0')->get();
 
         return view('admin.users.index', [
             'users' => $users,
