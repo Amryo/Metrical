@@ -19,7 +19,7 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 
 Broadcast::channel('send_message',  function ($user)
 {
-    return true;
+    // return true;
     if($user->type == 4){
         return true;
     }
