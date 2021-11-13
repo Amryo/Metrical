@@ -25,6 +25,6 @@ class SendMessageToAdmin
      */
     public function handle($event)
     {
-        //
+       
     }
 }
