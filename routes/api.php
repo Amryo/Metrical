@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ContactWithAdminController;
 use App\Http\Controllers\Api\AccessTokenController;
 use App\Http\Controllers\API\AmenityController;
 use App\Http\Controllers\API\CommunityController;
@@ -66,3 +67,13 @@ Route::post('auth/request/tenant', [AccessTokenController::class, 'requestAsTena
 
 Route::post('auth/request/owner', [AccessTokenController::class, 'requestAsOwner'])
     ->middleware('auth:sanctum');
+
+Route::get('term',[AccessTokenController::class , 'terms']);   
+Route::post('changePass',[AccessTokenController::class , 'changePass'])
+    ->middleware('auth:sanctum');
+    
+Route::post('interested', [EventController::class , 'interested'])
+    ->middleware('auth:sanctum');
+    
+Route::post('contact', [ContactWithAdminController::class , 'store'])
+    ->middleware('auth:sanctum');    

@@ -4,7 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
+use App\Models\InterestedUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
@@ -37,6 +39,36 @@ class EventController extends Controller
             'status' => 404,
             'message' => __('messages.events.notfound'),
             'data' => $events,
+        ];
+    }
+
+    // interested or not
+
+    public function interested(Request $request)
+    {
+        $user = Auth::guard('sanctum')->user();
+        $request->validate([
+            'status' => 'required',
+            'event_id' => 'required' 
+        ]);
+        
+        $request->merge([
+            'user_id' => $user->id
+        ]);
+        
+        InterestedUser::create($request->all());
+        if($request->status == 1){
+            return [
+                'status' => 200,
+                'message' => __('messages.interested'),
+                'data' => '',
+            ];
+        }
+
+        return [
+            'status' => 200,
+            'message' => __('messages.notInterested'),
+            'data' => '',
         ];
     }
 }

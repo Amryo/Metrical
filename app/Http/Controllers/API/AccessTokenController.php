@@ -125,6 +125,7 @@ class AccessTokenController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request;
         $request->validate([
             'email' => ['required'],
             'device_name' => ['required'],
@@ -134,7 +135,7 @@ class AccessTokenController extends Controller
 
         $user = User::where('email', $email)
             ->first();
-
+        //    return $user->password;
         if (!$user || !Hash::check($request->password, $user->password)) {
             // RateLimiter::hit($this->throttleKey());
             return  response()->json(
@@ -254,7 +255,7 @@ class AccessTokenController extends Controller
         $email = trim($request->email);
         $user = User::where('email', $email)->first();
         $user->update([
-            'password' => $request->password
+            'password' => Hash::make($request->password)
         ]);
 
         return  response()->json(
@@ -269,6 +270,7 @@ class AccessTokenController extends Controller
 
     public function requestAsTenant(Request $request)
     {
+        // return $request;
         $request->merge([
             'user_id' => Auth::guard('sanctum')->id(),
         ]);
@@ -277,19 +279,24 @@ class AccessTokenController extends Controller
             'passport' => 'required| file',
             'visa' => 'required | file',
             'unit_number' => 'required',
-            'unit_number' => 'required',
+
         ]);
 
         $user = Auth::guard('sanctum')->user();
+        $user1 = User::findOrFail($request->user_id);
+        $user1->update([
+            'status' => '0',
+        ]);
+
 
         if ($request->hasFile('passport')) {
             if ($user->passport_copy !== null) {
 
-                unlink(public_path('uploads/' . $user->passport_copy));
+                unlink(public_path('upload/' . $user->passport_copy));
             }
             $uploadedFile = $request->file('passport');
 
-            $passport_copy = $uploadedFile->store('/', 'uploads');
+            $passport_copy = $uploadedFile->store('/', 'upload');
             $request->merge([
                 'passport_copy' => $passport_copy
             ]);
@@ -297,21 +304,17 @@ class AccessTokenController extends Controller
         if ($request->hasFile('visa')) {
             if ($user->visa_copy !== null) {
 
-                unlink(public_path('uploads/' . $user->visa_copy));
+                unlink(public_path('upload/' . $user->visa_copy));
             }
             $uploadedFile = $request->file('visa');
 
-            $visa_copy = $uploadedFile->store('/', 'uploads');
-            $request->merge([
-                'visa_copy' => $visa_copy
-            ]);
+            $visa_copy = $uploadedFile->store('/', 'upload');
             $request->merge([
                 'visa_copy' => $visa_copy
             ]);
         }
-        $user1 = User::findOrFail($request->user_id);
         $user1->update([
-            'type' => 2,
+            'type' => '2',
         ]);
 
         Tenant::create($request->all());
@@ -325,6 +328,7 @@ class AccessTokenController extends Controller
             200
         );
     }
+
     public function requestAsOwner(Request $request)
     {
         $request->merge([
@@ -346,7 +350,7 @@ class AccessTokenController extends Controller
         if ($request->hasFile('passport')) {
             if ($user->passport_copy !== null) {
 
-                unlink(public_path('uploads/' . $user->passport_copy));
+                unlink(public_path('upload/' . $user->passport_copy));
             }
             $uploadedFile = $request->file('passport');
 
@@ -358,7 +362,7 @@ class AccessTokenController extends Controller
         if ($request->hasFile('title_dead')) {
             if ($user->title_dead_copy !== null) {
 
-                unlink(public_path('uploads/' . $user->title_dead_copy));
+                unlink(public_path('upload/' . $user->title_dead_copy));
             }
             $uploadedFile = $request->file('title_dead');
 
@@ -372,7 +376,7 @@ class AccessTokenController extends Controller
         }
         $user1 = User::findOrFail($request->user_id);
         $user1->update([
-            'type' => 1,
+            'type' => '1',
         ]);
 
 
@@ -387,5 +391,48 @@ class AccessTokenController extends Controller
             ],
             200
         );
+    }
+
+    public function terms()
+    {
+        return response()->json([
+            'status' => '200',
+            'message' => 'terms message',
+            'data' => User::$term
+        ]);
+    }
+
+
+    public function changePass(Request $request)
+    {
+        $request->validate([
+            'current_pass' => 'required',
+            'password' => [Password::min(8), 'confirmed', 'required'],
+            'password_confirmation',
+        ]);
+
+        $user = Auth::guard('sanctum')->user();
+
+        if (!Hash::check($request->current_pass, $user->password)) {
+            // RateLimiter::hit($this->throttleKey());
+            return  response()->json(
+                [
+                    'status' => '404',
+                    'message' => 'current password not valid',
+                    'data' => null
+                ],
+                404
+            );
+        }
+
+        $user->update([
+            'password' => Hash::make($request->new_pass)
+        ]);
+
+        return response()->json([
+            'status' => '201',
+            'message' => 'password was updated',
+            'date' => ''
+        ], 201);
     }
 }

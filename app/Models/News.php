@@ -8,7 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class News extends Model
 {
     use HasFactory;
-
+    protected $fillable = [
+        'title_ar',
+        'title_en',
+        'title_gr',
+        'description_ar',
+        'description_en',
+        'description_gr',
+        'image_url', 'images', 'community_id'
+    ];
     public function community()
     {
         return $this->belongsTo(Community::class, 'community_id', 'id');
@@ -22,11 +30,24 @@ class News extends Model
         $description = 'description_' . strval($this->name . app()->getLocale());
 
         return [
-            'title' => $this->$title,
-            'description' => $this->$description,
+            'community_id' => $this->community_id,
+
+            'title_ar' => $this->title_ar,
+            'title_en' => $this->title_en,
+            'title_gr' => $this->title_gr,
+            'description_ar' => $this->description_ar,
+            'description_en' => $this->description_en,
+            'description_gr' => $this->description_gr,
             'main_image' => $this->image_url,
             'images' => $this->images,
-            'community_id' => $this->community_id,
+            'community' => $this->community,
+            'description' => $this->$description,
+            'title' => $this->$title,
+
         ];
     }
+
+    protected $casts = [
+        'images' => 'array',
+    ];
 }

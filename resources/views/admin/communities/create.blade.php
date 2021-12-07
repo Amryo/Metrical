@@ -152,7 +152,7 @@
                                                         data-action="change" data-toggle="tooltip" title=""
                                                         data-original-title="Change avatar">
                                                         <i class="fa fa-pen icon-sm text-muted"></i>
-                                                        <input name="image" type="file" name="profile_avatar"
+                                                        <input name="image_url" type="file" name="profile_avatar"
                                                             accept=".png, .jpg, .jpeg" />
                                                         <input type="hidden" name="profile_avatar_remove" />
                                                     </label>

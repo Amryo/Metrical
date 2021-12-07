@@ -9,6 +9,15 @@ class Event extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title_ar',
+        'title_en',
+        'title_gr',
+        'description_ar',
+        'description_en',
+        'description_gr',
+        'address', 'start_date', 'end_date', 'community_id'
+    ];
     public function community()
     {
         return $this->belongsTo(Community::class, 'community_id', 'id');
@@ -20,6 +29,7 @@ class Event extends Model
         $title = 'title_' . strval($this->name . app()->getLocale());
         $description = 'description_' . strval($this->name . app()->getLocale());
         return [
+            'id' => $this->id,
             'title' => $this->$title,
             'description' => $this->$description,
             'address' => $this->address,
@@ -27,6 +37,7 @@ class Event extends Model
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
             'community_id' => $this->community_id,
+            'community' => $this->community
         ];
     }
 }
