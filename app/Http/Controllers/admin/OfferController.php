@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Rent;
+use App\Models\Offer;
+use App\Models\Property;
 use Illuminate\Http\Request;
 
-class RentController extends Controller
+class OfferController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,12 +16,22 @@ class RentController extends Controller
      */
     public function index()
     {
-        $rents = Rent::get();
-        return [
-            'status' => 200,
-            'message' => 'rents recived Successfully',
-            'data' => $rents,
-        ];
+        $title = 'All Offers';
+        $offers = Offer::with('property')->get();
+        return view('admin.offers.index', [
+            'offers' => $offers,
+            'title' => $title,
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -31,7 +42,12 @@ class RentController extends Controller
      */
     public function store(Request $request)
     {
-        
+
+        $d = Property::where('id', $request->property_id)->whereDoesntHave('rent')->exists();
+        if ($d) {
+            Offer::create($request->all());
+        }
+        return redirect()->back();
     }
 
     /**
@@ -41,6 +57,17 @@ class RentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
         //
     }

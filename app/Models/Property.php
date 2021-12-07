@@ -5,11 +5,50 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class Property extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'name_ar',
+        'name_en',
+        'name_gr',
+        'area',
+        'reference',
+        'feminizations',
+        'is_shortterm',
+        'bedroom',
+        'bathroom',
+        'gate',
+        'date_added',
+        'address_ar',
+        'address_en',
+        'address_gr',
+        'description_ar',
+        'description_ar',
+        'description_ar',
+        'city',
+        'location_latitude',
+        'location_longitude',
+        'image_url',
+        'images',
+        'type',
+        'offer_type',
+        'status',
+        'community_id',
+        'owner_id',
+        'amenities'
 
+
+
+    ];
+
+    protected $casts = ['amenities' => 'json', 'images' => 'json'];
+    /**
+     * 
+     * Relations &_&
+     */
     public function community()
     {
         return $this->belongsTo(Community::class, 'community_id', 'id');
@@ -31,6 +70,23 @@ class Property extends Model
     {
         return $this->belongsTo(Owner::class, 'owner_id', 'id');
     }
+
+    /**
+     * 
+     * 
+     * Functions For Program
+     */
+    public function scopePercentage()
+    {
+        $rentedNow = $this->whereHas('rent')->count();
+        $total = $this->count();
+        if ($rentedNow != 0) {
+            $per = $rentedNow  / $total * 100;
+        }
+
+        return $per  ??  0;
+    }
+
     public function toArray()
     {
         $name = 'name_' . strval($this->name . app()->getLocale());
@@ -54,6 +110,7 @@ class Property extends Model
             'status' => $this->status,
             'location_longitude' => $this->location_longitude,
             'location_latitude' => $this->location_latitude,
+            'amenities' => $this->amenities,
             'price' => $this->price,
             'gate' => $this->gate,
             'community_id' => $this->community_id,

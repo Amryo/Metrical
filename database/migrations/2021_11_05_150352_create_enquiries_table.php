@@ -15,6 +15,11 @@ class CreateEnquiriesTable extends Migration
     {
         Schema::create('enquiries', function (Blueprint $table) {
             $table->id();
+
+            $table->string('full_name');
+            $table->string('email');
+            $table->string('mobile');
+
             $table->foreignId('user_id')->constrained('users', 'id')->cascadeOnDelete();
             $table->foreignId('property_id')->nullable()->constrained('properties', 'id')->cascadeOnDelete();
             $table->foreignId('community_id')->nullable()->constrained('communities', 'id')->cascadeOnDelete();

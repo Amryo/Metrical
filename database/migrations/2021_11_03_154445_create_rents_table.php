@@ -16,8 +16,8 @@ class CreateRentsTable extends Migration
         Schema::create('rents', function (Blueprint $table) {
             $table->id();
             //
-            $table->string('from')->nullable();
-            $table->string('to')->nullable();
+            $table->dateTime('from')->nullable();
+            $table->dateTime('to')->nullable();
             $table->unsignedBigInteger('price')->nullable();
             $table->foreignId('property_id')->constrained('properties', 'id')->cascadeOnDelete();
             $table->foreignId('tenant_id')->constrained('tenants', 'id')->cascadeOnDelete();

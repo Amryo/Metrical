@@ -42,4 +42,16 @@ class PropertyController extends Controller
             'data' => $properties,
         ];
     }
+
+    public function shortTerm()
+    {
+        $properties = Property::with('community')->where('is_shortterm', 1)->get();
+        if ($properties != null) {
+            return [
+                'status' => 200,
+                'message' => __('messages.properties'),
+                'data' => $properties,
+            ];
+        }
+    }
 }

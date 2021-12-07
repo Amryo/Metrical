@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTenantsTable extends Migration
+class CreateMoveOutsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,21 @@ class CreateTenantsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tenants', function (Blueprint $table) {
+        Schema::create('move_outs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('users_id')->constrained('users', 'id')->cascadeOnDelete();
-            $table->foreignId('community_id')->constrained('communities', 'id')->cascadeOnDelete();
             $table->string('full_name');
+            $table->string('country');
             $table->string('email');
             $table->string('mobile');
-            $table->string('passport_copy')->nullable();
-            $table->string('visa_copy')->nullable();
-            $table->unsignedInteger('unit_number')->nullable();
+            $table->date('data');
+            $table->dateTime('start_time');
+            $table->dateTime('end_time');
+            $table->boolean('agree');
+
+
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('property_id')->constrained('properties')->cascadeOnDelete();
+
             $table->timestamps();
         });
     }
@@ -34,6 +39,6 @@ class CreateTenantsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tenants');
+        Schema::dropIfExists('move_outs');
     }
 }

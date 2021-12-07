@@ -23,48 +23,20 @@ class EventController extends Controller
         ];
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function eventsByCommunity($id)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $events = Event::where('community_id', $id)->exists();
+        if ($events) {
+            return [
+                'status' => 200,
+                'message' => __('messages.events'),
+                'data' => Event::where('community_id', $id)->get(),
+            ];
+        }
+        return [
+            'status' => 404,
+            'message' => __('messages.events.notfound'),
+            'data' => $events,
+        ];
     }
 }

@@ -15,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with('owner.property')->paginate(5);
+        $users = User::with('owner.property')->get();
         return [
             'status' => 200,
             'message' => 'users recived Successfully',
@@ -42,7 +42,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $users = User::with('owner.property')->where('id', $id)->paginate(5);
+        $users = User::with('owner.property')->where('id', $id)->first();
         return [
             'status' => 200,
             'message' => 'users recived Successfully',

@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\Admin\CommunitiesController;
+use App\Http\Controllers\Admin\OfferController;
+use App\Http\Controllers\Admin\PropertyController;
 use App\Http\Controllers\Admin\UsersController;
-use App\Http\Controllers\API\CommunityController;
+
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,6 +28,8 @@ Route::get('admin-panel', function () {
 });
 
 Route::resource('admin/communities', CommunitiesController::class);
+Route::resource('properties', PropertyController::class);
+Route::resource('offers', OfferController::class);
 
 Route::get('admin/binding-users', [UsersController::class, 'index'])->name('binding.users');
 Route::get('admin/tenants-users', [UsersController::class, 'tenants'])->name('tenants.users');

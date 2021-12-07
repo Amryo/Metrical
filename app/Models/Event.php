@@ -19,7 +19,6 @@ class Event extends Model
 
         $title = 'title_' . strval($this->name . app()->getLocale());
         $description = 'description_' . strval($this->name . app()->getLocale());
-
         return [
             'title' => $this->$title,
             'description' => $this->$description,

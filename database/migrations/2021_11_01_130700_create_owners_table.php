@@ -17,6 +17,9 @@ class CreateOwnersTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('community_id')->constrained('communities')->cascadeOnDelete();
+            $table->string('full_name');
+            $table->string('email');
+            $table->string('mobile');
             $table->string('passport_copy')->nullable();
             $table->string('title_dead_copy')->nullable();
             $table->string('emirate_id')->nullable();

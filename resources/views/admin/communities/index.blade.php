@@ -6,7 +6,6 @@
             <div class="card-header border-0 py-5">
                 <h3 class="card-title align-items-start flex-column">
                     <span class="card-label font-weight-bolder text-dark">{{$title}}</span>
-                    <span class="text-muted mt-3 font-weight-bold font-size-sm">More than 400+ new members</span>
                 </h3>
                 <div class="card-toolbar">
                     <!--begin::Button-->
@@ -24,7 +23,7 @@
                                 </g>
                             </svg>
                             <!--end::Svg Icon-->
-                        </span>New Record
+                        </span>New Community
                     </a>
                     <!--end::Button-->
                 </div>
@@ -133,8 +132,11 @@
                                 <td>
                                     <span class="label label-lg label-light-success label-inline">
                                         @if($community->status == 0)
-                                        Under-Construction @endif @if($community->status == 1)
-                                        Ready @endif</span>
+                                        Under-Construction 
+                                        @else
+                                        Ready 
+                                        @endif
+                                    </span>
                                 </td>
                                 <td>
                                     <span

@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Rent;
+use App\Models\Offer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class RentController extends Controller
+class OfferController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +16,12 @@ class RentController extends Controller
      */
     public function index()
     {
-        $rents = Rent::get();
+
+        $offers = Offer::where('type', '!=', 'stop')->get();
         return [
             'status' => 200,
-            'message' => 'rents recived Successfully',
-            'data' => $rents,
+            'message' => 'offers recived Successfully',
+            'data' => $offers,
         ];
     }
 
@@ -31,7 +33,23 @@ class RentController extends Controller
      */
     public function store(Request $request)
     {
-        
+
+
+
+        if (!Offer::where('property_id', $request->property_id)->exists()) {
+            $offers = Offer::create($request->all());
+            return [
+                'status' => 200,
+                'message' => 'Offer  sent Successfully',
+                'data' => $offers ?? 'Property Has Offer',
+            ];
+        }
+
+        return [
+            'status' => 404,
+            'message' => 'Offer Not Sent',
+            'data' => $offers ?? 'Property Has Offer',
+        ];
     }
 
     /**

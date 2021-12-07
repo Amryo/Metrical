@@ -1,15 +1,15 @@
 'use strict';
 // Class definition
 
-var KTDatatableHtmlTableDemo = function() {
+var KTDatatableHtmlTableDemo = function () {
   // Private functions
 
   // demo initializer
-  var demo = function() {
+  var demo = function () {
 
     var datatable = $('#kt_datatable').KTDatatable({
       data: {
-        saveState: {cookie: false},
+        saveState: { cookie: false },
       },
       search: {
         input: $('#kt_datatable_search_query'),
@@ -32,7 +32,7 @@ var KTDatatableHtmlTableDemo = function() {
           title: 'Status',
           autoHide: false,
           // callback function support for column rendering
-          template: function(row) {
+          template: function (row) {
             var status = {
               1: {
                 'title': 'Pending',
@@ -70,18 +70,18 @@ var KTDatatableHtmlTableDemo = function() {
           title: 'Type',
           autoHide: false,
           // callback function support for column rendering
-          template: function(row) {
+          template: function (row) {
             var status = {
               1: {
-                'title': 'Online',
+                'title': 'Stop',
                 'state': 'danger',
               },
               2: {
-                'title': 'Retail',
+                'title': 'Rent',
                 'state': 'primary',
               },
               3: {
-                'title': 'Direct',
+                'title': 'Sale',
                 'state': 'success',
               },
             };
@@ -91,11 +91,11 @@ var KTDatatableHtmlTableDemo = function() {
       ],
     });
 
-    $('#kt_datatable_search_status').on('change', function() {
+    $('#kt_datatable_search_status').on('change', function () {
       datatable.search($(this).val().toLowerCase(), 'Status');
     });
 
-    $('#kt_datatable_search_type').on('change', function() {
+    $('#kt_datatable_search_type').on('change', function () {
       datatable.search($(this).val().toLowerCase(), 'Type');
     });
 
@@ -105,13 +105,13 @@ var KTDatatableHtmlTableDemo = function() {
 
   return {
     // Public functions
-    init: function() {
+    init: function () {
       // init dmeo
       demo();
     },
   };
 }();
 
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
   KTDatatableHtmlTableDemo.init();
 });

@@ -6,8 +6,10 @@ use App\Http\Controllers\API\CommunityController;
 use App\Http\Controllers\API\EnquiryController;
 use App\Http\Controllers\API\EventController;
 use App\Http\Controllers\API\NewsController;
+use App\Http\Controllers\API\OfferController;
 use App\Http\Controllers\API\PropertyController;
 use App\Http\Controllers\API\RentController;
+use App\Http\Controllers\API\StopOfferController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,16 +29,24 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+Route::middleware(['localization'])->group(function () {
+    Route::apiResource('communities', CommunityController::class);
+    Route::apiResource('properties', PropertyController::class);
+    Route::get('properties/status/{status}', [PropertyController::class, 'Status']);
+    Route::get('properties/shortterm', [PropertyController::class, 'shortTerm']);
+    Route::apiResource('rents', RentController::class);
+    Route::apiResource('amenities', AmenityController::class);
+    Route::apiResource('news', NewsController::class);
+    Route::get('community/{id}/news', [NewsController::class, 'newsByCommunity']);
+    Route::apiResource('events', EventController::class);
+    Route::get('community/{id}/events', [EventController::class, 'eventsByCommunity']);
+    Route::apiResource('enquiry', EnquiryController::class);
+    Route::apiResource('users', UserController::class);
+    Route::apiResource('offers', OfferController::class);
+    Route::post('stop-offer', [StopOfferController::class, 'store']);
+});
 //API (Amr Younis)
-Route::apiResource('communities', CommunityController::class)->middleware('localization');
-Route::apiResource('properties', PropertyController::class)->middleware('localization');
-Route::get('properties/status/{status}', [PropertyController::class, 'Status'])->middleware('localization');
-Route::apiResource('rents', RentController::class)->middleware('localization');
-Route::apiResource('amenities', AmenityController::class)->middleware('localization');
-Route::apiResource('news', NewsController::class)->middleware('localization');
-Route::apiResource('events', EventController::class)->middleware('localization');
-Route::apiResource('enquiry', EnquiryController::class)->middleware('localization');
-Route::apiResource('users', UserController::class)->middleware('localization');
 
 
 

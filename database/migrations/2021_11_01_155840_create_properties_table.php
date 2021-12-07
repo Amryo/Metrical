@@ -25,27 +25,27 @@ class CreatePropertiesTable extends Migration
             $table->boolean('is_shortterm');
             $table->unsignedInteger('bedroom')->default(0);
             $table->unsignedInteger('bathroom')->default(0);
-            $table->date('date_added');
+            $table->unsignedInteger('gate')->default(0);
+            $table->date('date_added')->nullable();
             $table->string('address_ar');
             $table->string('address_en');
             $table->string('address_gr');
             $table->text('description_ar')->nullable();
             $table->text('description_en')->nullable();
             $table->text('description_gr')->nullable();
-            $table->string('city');
+            $table->string('city')->nullable();
             $table->string('location_latitude');
             $table->string('location_longitude');
-
-
+            $table->json('amenities')->nullable();
             $table->string('image_url')->nullable();
             $table->json('images')->nullable();
 
             $table->enum('type', ['house', 'apartment']);
-            
+
             $table->enum('offer_type', ['stop', 'sale', 'rent', 'both',]);
             // 0 is under Contruction , 1 is Ready
             $table->enum('status', [0, 1]);
-            $table->integer('gate');
+
             //forignK
             $table->foreignId('community_id')->constrained('communities')->cascadeOnDelete();
             $table->foreignId('owner_id')->nullable()->constrained('owners')->cascadeOnDelete();
