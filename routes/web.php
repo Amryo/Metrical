@@ -5,6 +5,10 @@ use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\API\CommunityController;
 use App\Http\Controllers\EventsController;
+use App\Models\Event;
+use App\Models\User;
+use App\Notifications\SendReminderForEventNotification;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +23,23 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    // $events =  Event::with('users')->whereDate('start_date', Carbon::now()->addDays(7))->get();
+    // $userEvent = collect([]);
+    // foreach($events as $event){
+    //    return $event->users;
+    //     $userEvent->push($event->users);
+    // }
+    // return Carbon::now()->addDays(7);
+    // return $userEvent;
+    // $events =  Event::with('users')->whereDate('start_date', Carbon::now()->addDays(7))->get();
+    $events =  Event::with('users')->whereDate('start_date', Carbon::now()->addDays(7))->get();
+    foreach($events as $event){
+        foreach($event->users as $user){
+            
+            $user->notify(new SendReminderForEventNotification($user->pivot->event_id));
+        }
+        
+    }
     return view('welcome');
 });
 

@@ -41,4 +41,8 @@ class Event extends Model
             'community' => $this->community
         ];
     }
+    public function users()
+    {
+        return $this->belongsToMany(User::class , 'interested_users');
+    }
 }

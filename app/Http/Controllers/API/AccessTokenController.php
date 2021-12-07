@@ -293,11 +293,11 @@ class AccessTokenController extends Controller
         if ($request->hasFile('passport')) {
             if ($user->passport_copy !== null) {
 
-                unlink(public_path('uploads/' . $user->passport_copy));
+                unlink(public_path('upload/' . $user->passport_copy));
             }
             $uploadedFile = $request->file('passport');
 
-            $passport_copy = $uploadedFile->store('/', 'uploads');
+            $passport_copy = $uploadedFile->store('/', 'upload');
             $request->merge([
                 'passport_copy' => $passport_copy
             ]);
@@ -305,11 +305,11 @@ class AccessTokenController extends Controller
         if ($request->hasFile('visa')) {
             if ($user->visa_copy !== null) {
 
-                unlink(public_path('uploads/' . $user->visa_copy));
+                unlink(public_path('upload/' . $user->visa_copy));
             }
             $uploadedFile = $request->file('visa');
 
-            $visa_copy = $uploadedFile->store('/', 'uploads');
+            $visa_copy = $uploadedFile->store('/', 'upload');
             $request->merge([
                 'visa_copy' => $visa_copy
             ]);
@@ -354,11 +354,11 @@ class AccessTokenController extends Controller
         if ($request->hasFile('passport')) {
             if ($user->passport_copy !== null) {
 
-                unlink(public_path('uploads/' . $user->passport_copy));
+                unlink(public_path('upload/' . $user->passport_copy));
             }
             $uploadedFile = $request->file('passport');
 
-            $passport_copy = $uploadedFile->store('/', 'uploads');
+            $passport_copy = $uploadedFile->store('/', 'upload');
             $request->merge([
                 'passport_copy' => $passport_copy
             ]);
@@ -366,11 +366,11 @@ class AccessTokenController extends Controller
         if ($request->hasFile('title_dead')) {
             if ($user->title_dead_copy !== null) {
 
-                unlink(public_path('uploads/' . $user->title_dead_copy));
+                unlink(public_path('upload/' . $user->title_dead_copy));
             }
             $uploadedFile = $request->file('title_dead');
 
-            $title_dead_copy = $uploadedFile->store('/', 'uploads');
+            $title_dead_copy = $uploadedFile->store('/', 'upload');
            
             $request->merge([
                 'title_dead_copy' => $title_dead_copy
