@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\InterestedUser;
+use App\Notifications\SendReminderForEventNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -55,7 +56,7 @@ class EventController extends Controller
         $request->merge([
             'user_id' => $user->id
         ]);
-        
+        // $user->notify(new SendReminderForEventNotification(Event::find($request->event_id)));
         InterestedUser::create($request->all());
         if($request->status == 1){
             return [

@@ -57,6 +57,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(Owner::class, 'user_id');
     }
+    public function events()
+    {
+        return $this->belongsToMany(Event::class , 'interested_users');
+    }
 
     static $term = "Contrary to popular belief, Lorem Ipsum is
     not simply random text. It has roots in a
