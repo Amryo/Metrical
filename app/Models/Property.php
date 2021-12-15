@@ -38,7 +38,8 @@ class Property extends Model
         'status',
         'community_id',
         'owner_id',
-        'amenities'
+        'amenities',
+        
 
 
 

@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Jobs\InterstedEvent;
+use App\Jobs\SendReminderToTanentJob;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -27,6 +28,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->job( new InterstedEvent() )->dailyAt('21:00');
+        $schedule->job( new SendReminderToTanentJob() )->everyMinute();
     }
 
     /**

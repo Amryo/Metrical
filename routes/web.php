@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\API\CommunityController;
 use App\Http\Controllers\EventsController;
 use App\Models\Event;
+use App\Models\Rent;
+use App\Models\Tenant;
 use App\Models\User;
 use App\Notifications\SendReminderForEventNotification;
 use Illuminate\Support\Carbon;
@@ -25,23 +27,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    // $events =  Event::with('users')->whereDate('start_date', Carbon::now()->addDays(7))->get();
-    // $userEvent = collect([]);
-    // foreach($events as $event){
-    //    return $event->users;
-    //     $userEvent->push($event->users);
-    // }
-    // return Carbon::now()->addDays(7);
-    // return $userEvent;
-    // $events =  Event::with('users')->whereDate('start_date', Carbon::now()->addDays(7))->get();
-    $events =  Event::with('users')->whereDate('start_date', Carbon::now()->addDays(7))->get();
-    foreach($events as $event){
-        foreach($event->users as $user){
+    $events =  Rent::with('tenet')->whereDate('to', Carbon::now()->addDays(7))->get();
+        // return $events[0]->tenet;x
+        foreach($events as $event){
+            // return $event->property->name_en;
+            // $user =  $event->tenet;
+            // // return $event[0];
+            // $user->notify(new SendReminderForEventNotification($eventx));
+            // foreach($event->tenet as $user){
+            //     // $user = User::find($user);
+            //     return $user;
+            //     // return $user;
+            // //    return $event->property->name_en;
+            // }
             
-            $user->notify(new SendReminderForEventNotification($user->pivot->event_id));
         }
-        
-    }
     return view('welcome');
 });
 

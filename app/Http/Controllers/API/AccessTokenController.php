@@ -342,6 +342,7 @@ class AccessTokenController extends Controller
             'unit_number' => 'required',
             'renting_price' => 'required',
             'direct' => 'required',
+         
         ]);
 
         $user = Auth::guard('sanctum')->user();

@@ -62,8 +62,9 @@ class PropertyController extends Controller
 
 
         $request->merge([
-            'data_added' => Carbon::now(),
+            'date_added' => Carbon::now(),
             'community_id' => 1,
+            ''
         ]);
         $isSaved = Property::create($request->all());
         if ($isSaved) {

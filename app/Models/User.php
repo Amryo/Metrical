@@ -31,13 +31,16 @@ class User extends Authenticatable
         'type',
         'status',
         'code',
-        'email_verified_at'
+        'email_verified_at',
+        'nationality',
+        'id_number'
     ];
 
 
     protected $hidden = [
         'password',
         'remember_token',
+        'code'
     ];
 
     /**

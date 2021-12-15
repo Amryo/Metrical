@@ -76,4 +76,10 @@ Route::post('interested', [EventController::class , 'interested'])
     ->middleware('auth:sanctum');
     
 Route::post('contact', [ContactWithAdminController::class , 'store'])
+    ->middleware('auth:sanctum');  
+
+Route::put('profile', [UserController::class , 'editProfile'])
+    ->middleware('auth:sanctum');  
+
+Route::get('profile', [UserController::class , 'showProfile'])
     ->middleware('auth:sanctum');    

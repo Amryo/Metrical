@@ -14,6 +14,9 @@ class Tenant extends Model
         'passport_copy',
         'visa_copy',
         'unit_number',
+        'full_name',
+        'email',
+        'mobile'
     ];
     public function user()
     {

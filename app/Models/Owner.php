@@ -17,6 +17,9 @@ class Owner extends Model
         'unit_number',
         'renting_price',
         'direct',
+        'full_name',
+        'email',
+        'mobile'
     ];
     public function user()
     {
